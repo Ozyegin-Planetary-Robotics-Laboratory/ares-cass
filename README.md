@@ -22,7 +22,7 @@ Add a new data source with the following settings:
 - Username: cassandra
 - Password: cassandra
 
-#### 1. Using cqlsh:
+#### 2. Using cqlsh:
 
 Connect to the ScyllaDB container with the following command:
 
