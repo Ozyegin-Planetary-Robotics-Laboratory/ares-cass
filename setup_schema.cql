@@ -10,40 +10,51 @@ use ares;
 
 create table if not exists archives
 (
-    uuid        uuid,
-    createdat   timestamp,
-    updatedat   timestamp,
-    name        text,
-    eid         text,
-    primary key ( uuid )
+    uniqueid        uuid,
+    extendedid      text,
+    timecreated     timestamp,
+    primary key ( uniqueid )
 );
 
 // measurements
 
 create table if not exists measurements
 (
-    archive     uuid,
-    uuid        uuid,
-    createdat   timestamp,
-    latitude    double,
-    longitude   double,
-    altitude    double,
-    pressure    double,
-    images      list<uuid>,
-    panoramas   list<uuid>,
-    no2comp     double,
-    cocomp      double,
-    primary key ( archive, uuid )
+    archive         uuid,
+    uniqueid        uuid,
+    latitude        double,
+    longitude       double,
+    timecreated     timestamp,
+    altitude        double,
+    pressure        double,
+    no2comp         double,
+    cocomp          double,
+    primary key ( archive, uniqueid )
 );
 
-// images
+// photos
 
-create table if not exists images
+create table if not exists photos
 (
-    archive     uuid,
-    measurement uuid,
-    uuid        uuid,
-    createdat   timestamp,
-    image       blob,
-    primary key ( archive, measurement, uuid )
-)
+    archive         uuid,
+    uniqueid        uuid,
+    latitude        double,
+    longitude       double,
+    timecreated     timestamp,
+    image           blob,
+    primary key ( archive, uniqueid )
+);
+
+// panaromas
+
+create table if not exists panaromas
+(
+    archive         uuid,
+    uniqueid        uuid,
+    latitude        double,
+    longitude       double,
+    timecreated     timestamp,
+    image           blob,
+    primary key ( archive, uniqueid )
+);
+
