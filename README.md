@@ -43,20 +43,27 @@ Insert data into table using CQL commands or DataGrip console.
 #### Create an archive
 
 ```cql
-INSERT INTO ares.archives (uuid, name, eid, createdat, updatedat) VALUES (uuid(), 'Test Archive', 'external_id_0000', toTimestamp(now()), toTimestamp(now()));
-```
-
-#### Create an image
-
-Image data is blob.
-```cql
-INSERT INTO ares.images (archive, measurement, uuid, image, createdat) VALUES (archive_uuid_0001, measurement_uuid_0001, uuid(), 0x00000000, toTimestamp(now()));
+INSERT INTO ares.archives (uniqueid, extendedid, timecreated) VALUES (uuid(), 'archive-1', toTimestamp(now()));
 ```
 
 #### Create a measurement
 
 ```cql
-INSERT INTO ares.measurements(archive, uuid, createdat, latitude, longitude, altitude, pressure, images, panoramas, no2comp, cocomp) VALUES (archive_uuid_0001, uuid(), toTimestamp(now()), 0.0, 0.0, 0.0, 0.0, {image_uuid_0001, image_uuid_0002}, {image_uuid_0003, image_uuid_0004}, 0.0, 0.0);
+INSERT INTO ares.measurements(archive, uniqueid, latitude, longitude, timecreated, altitude, pressure, no2comp, cocomp) VALUES (archive_uuid_0001, uuid(), 62.12389, 112.12389, toTimestamp(now()), 1027.92, 719.3, 0.02, 0.05);
+```
+
+#### Create an photo
+
+Image data is blob.
+```cql
+INSERT INTO ares.photos (archive, uniqueid, latitude, longitude, timecreated, image) VALUES (archive_uuid_0001, uuid(),  62.12389, 112.12389, toTimestamp(now()), 0x00000000);
+```
+
+#### Create an panorama
+
+Image data is blob.
+```cql
+INSERT INTO ares.panoramas (archive, uniqueid, latitude, longitude, timecreated, image) VALUES (archive_uuid_0001, uuid(),  62.12389, 112.12389, toTimestamp(now()), 0x00000000);
 ```
 
 ### Query data
@@ -69,23 +76,32 @@ Query data from table using CQL commands or DataGrip console.
 SELECT * FROM ares.archives;
 ```
 
-#### Get images
+#### Get photos/panaromas
 
-- All images
+- All photos
     ```cql
-    SELECT * FROM ares.images;
+    SELECT * FROM ares.photos;
     ```
-- Images by archive
+- Photos by archive
     ```cql
-    SELECT * FROM ares.images WHERE archive = archive_uuid_0001;
+    SELECT * FROM ares.photos WHERE archive = archive_uuid_0001;
     ```
-- Images by measurement
+- Photos by uuid
     ```cql
-    SELECT * FROM ares.images WHERE archive = archive_uuid_0001 AND measurement = measurement_uuid_0001;
+    SELECT * FROM ares.photos WHERE archive = archive_uuid_0001 AND uniqueid = image_uuid_0001;
     ```
-- Image by uuid
+
+- All panoramas
     ```cql
-    SELECT * FROM ares.images WHERE archive = archive_uuid_0001 AND measurement = measurement_uuid_0001 AND uuid = image_uuid_0001;
+    SELECT * FROM ares.panoramas;
+    ```
+- Panoramas by archive
+    ```cql
+    SELECT * FROM ares.panoramas WHERE archive = archive_uuid_0001;
+    ```
+- Panoramas by uuid
+    ```cql
+    SELECT * FROM ares.panoramas WHERE archive = archive_uuid_0001 AND uniqueid = image_uuid_0001;
     ```
   
 #### Get measurements
