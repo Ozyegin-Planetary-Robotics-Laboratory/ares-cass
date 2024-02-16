@@ -45,9 +45,9 @@ create table if not exists photos
     primary key ( archive, uniqueid )
 );
 
-// panaromas
+// panorama
 
-create table if not exists panaromas
+create table if not exists panoramas
 (
     archive         uuid,
     uniqueid        uuid,
